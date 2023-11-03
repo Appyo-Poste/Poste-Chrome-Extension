@@ -1,0 +1,13 @@
+{
+    "name": "Poste",
+    "version": "0.0.1",
+    "description": "test",
+    "manifest_version": 3,
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "action": {
+        "default_popup": "login.html",
+        "default_title": "Poste"
+    }   
+}
