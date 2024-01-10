@@ -1,0 +1,24 @@
+{
+  "name": "Poste Chrome Extension",
+  "version": "1.0.0",
+  "description": "A chrome extension for users to save a post to their Poste account.",
+  "main": "index.jsx",
+  "keywords": [],
+  "author": "kmgehrma",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "@babel/preset-react": "^7.22.5",
+    "babel-loader": "^9.1.2",
+    "css-loader": "^6.8.1",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "path": "^0.12.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
