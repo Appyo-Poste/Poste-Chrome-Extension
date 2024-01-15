@@ -4,7 +4,7 @@ import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { Button } from '@/components/ui/button';
+import { Button } from './components/ui/Button';
 import {
   Form,
   FormControl,
@@ -12,8 +12,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/Form';
-import { Input } from '@/components/ui/input';
+} from './components/ui/Form';
+import { Input } from './components/ui/Input';
 
 // @TODO update these based on backend requirements
 export const folderSchema = z.object({
@@ -57,7 +57,7 @@ export function CreateFolderForm() {
         <FormField
           control={form.control}
           name="description"
-          rende={({ field }) => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>

@@ -4,7 +4,7 @@ import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { Button } from '@/components/ui/button';
+import { Button } from './components/ui/Button';
 import {
   Form,
   FormControl,
@@ -13,8 +13,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/Form';
-import { Input } from '@/components/ui/input';
+} from './components/ui/Form';
+import { Input } from './components/ui/Input';
 
 // @TODO update these based on backend requirements
 export const loginSchema = z.object({
@@ -43,7 +43,7 @@ export function LoginForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="username"
+          name="email"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
@@ -58,7 +58,7 @@ export function LoginForm() {
         <FormField
           control={form.control}
           name="password"
-          rende={({ field }) => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
@@ -71,7 +71,9 @@ export function LoginForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" variant="outline">
+          Submit
+        </Button>
       </form>
     </Form>
   );
