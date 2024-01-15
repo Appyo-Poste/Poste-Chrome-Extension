@@ -2,12 +2,12 @@
     "name": "Poste",
     "version": "0.0.1",
     "description": "A chrome extension for users to save a post to their Poste account",
-    "manifest_version": 3,
+    "manifest_version": 1,
     "host_permissions": [
         "<all_urls>"
     ],
     "action": {
-        "default_popup": "login.html",
+        "default_popup": "index.html",
         "default_title": "Poste"
     }   
 }
