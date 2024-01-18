@@ -15,24 +15,21 @@ import {
 } from './components/ui/Form';
 import { Input } from './components/ui/Input';
 
-// @TODO update these based on backend requirements
-export const folderSchema = z.object({
-  name: z.string().min(2).max(50),
-  description: z.string().min(2).max(50),
+export const createFolderSchema = z.object({
+  title: z.string().min(2).max(50),
 });
 
 export function CreateFolderForm() {
   // Define create folder form
-  const form = useForm<z.infer<typeof folderSchema>>({
-    resolver: zodResolver(folderSchema),
+  const form = useForm<z.infer<typeof createFolderSchema>>({
+    resolver: zodResolver(createFolderSchema),
     defaultValues: {
-      name: '',
-      description: '',
+      title: '',
     },
   });
 
   // Define create folder submit handler
-  function onSubmit(values: z.infer<typeof folderSchema>) {
+  function onSubmit(values: z.infer<typeof createFolderSchema>) {
     // @TODO something with the form values
     console.log(values);
   }
@@ -42,27 +39,14 @@ export function CreateFolderForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="name"
+          name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Post Name</FormLabel>
+              <FormLabel>Title</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
-
               <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
             </FormItem>
           )}
         />

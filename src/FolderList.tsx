@@ -1,6 +1,6 @@
 import React from 'react';
 import { DropdownMenuCheckboxItemProps } from '@radix-ui/react-dropdown-menu';
-import { Button } from '@/components/ui/Button';
+import { Button } from './components/ui/Button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -8,12 +8,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/DropdownMenu';
+} from './components/ui/DropdownMenu';
 
 type Checked = DropdownMenuCheckboxItemProps['checked'];
 
-interface Folder {
-  name: string;
+export interface Folder {
+  title: string;
   id: string;
 }
 
@@ -33,15 +33,15 @@ const FolderList = ({ folders }: FolderListProps) => {
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Select Folder for Post</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {folders.map(({ id, name }: Folder) => {
+        {folders.map(({ id, title }: Folder) => (
           <DropdownMenuCheckboxItem
             checked={showStatusBar}
             onCheckedChange={setShowStatusBar}
             key={id}
           >
-            {name}
-          </DropdownMenuCheckboxItem>;
-        })}
+            {title}
+          </DropdownMenuCheckboxItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );

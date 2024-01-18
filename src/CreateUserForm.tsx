@@ -19,6 +19,7 @@ import { Input } from './components/ui/Input';
 export const loginSchema = z.object({
   email: z.string().min(8).max(50),
   password: z.string().min(8).max(50),
+  name: z.string().min(1).max(50),
 });
 
 export function LoginForm() {
@@ -28,6 +29,7 @@ export function LoginForm() {
     defaultValues: {
       email: '',
       password: '',
+      name: '',
     },
   });
 
@@ -40,6 +42,18 @@ export function LoginForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input {...field} required />
+              </FormControl>
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="email"
@@ -63,6 +77,9 @@ export function LoginForm() {
               <FormControl>
                 <Input placeholder="********" {...field} required />
               </FormControl>
+              <FormDescription>
+                Your password should be at least eight characters.
+              </FormDescription>
             </FormItem>
           )}
         />
