@@ -4,7 +4,7 @@ import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { Button } from './components/ui/Button';
+import { Button } from './ui/Button';
 import {
   Form,
   FormControl,
@@ -13,13 +13,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from './components/ui/Form';
-import { Input } from './components/ui/Input';
+} from './ui/Form';
+import { Input } from './ui/Input';
 
 export const loginSchema = z.object({
   email: z.string().min(8).max(50),
   password: z.string().min(8).max(50),
-  name: z.string().min(1).max(50),
 });
 
 export function LoginForm() {
@@ -29,7 +28,6 @@ export function LoginForm() {
     defaultValues: {
       email: '',
       password: '',
-      name: '',
     },
   });
 
@@ -42,18 +40,6 @@ export function LoginForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input {...field} required />
-              </FormControl>
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="email"
@@ -77,14 +63,11 @@ export function LoginForm() {
               <FormControl>
                 <Input placeholder="********" {...field} required />
               </FormControl>
-              <FormDescription>
-                Your password should be at least eight characters.
-              </FormDescription>
             </FormItem>
           )}
         />
         <Button type="submit" variant="outline">
-          Submit
+          Log in
         </Button>
       </form>
     </Form>

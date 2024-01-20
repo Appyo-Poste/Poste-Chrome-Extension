@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { Button } from './components/ui/Button';
+import { Button } from './ui/Button';
 import {
   Form,
   FormControl,
@@ -13,9 +13,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from './components/ui/Form';
-import { Input } from './components/ui/Input';
-import FolderList, { Folder } from 'FolderList';
+} from './ui/Form';
+import { Input } from './ui/Input';
+import FolderList, { Folder } from './FolderList';
 
 const folderSchema = z.object({
   title: z.string(),
@@ -134,7 +134,7 @@ export function CreatePostForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Create</Button>
       </form>
     </Form>
   );

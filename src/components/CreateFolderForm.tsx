@@ -4,7 +4,7 @@ import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { Button } from './components/ui/Button';
+import { Button } from './ui/Button';
 import {
   Form,
   FormControl,
@@ -12,8 +12,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from './components/ui/Form';
-import { Input } from './components/ui/Input';
+} from './ui/Form';
+import { Input } from './ui/Input';
 
 export const createFolderSchema = z.object({
   title: z.string().min(2).max(50),
@@ -50,7 +50,7 @@ export function CreateFolderForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Create</Button>
       </form>
     </Form>
   );
