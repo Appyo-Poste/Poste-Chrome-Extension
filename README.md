@@ -1,13 +1,33 @@
 # Poste-Chrome-Extension
-There are two paths we could develope this down. One being a stand alone exprince that allows the user to have the full functionality of a Poste by it self. The other option would be to have it used along side a webstie allowing esay saving of web pages in Poste, but later viewing would only be done though the web site. 
-## Chrome Extension general info
-Chrome extensions are quite similar to web development. Development makes use of HTML, javascrpit, and CSS with the main diffrence being that Chrome extensions make use a manifest.json file that holds infomation about the files used by the extension. HTMl is used for the screens with CSS to help with styling, then javascrpit is use for the functionalty of the pages. 
+This chrome extension will serve as a companion to the mobile and web applications. Users will be able to login, create posts and folders, but viewing collections will be done via either the mobile or web application.
 
-## Chrome Extension development tools
+## Chrome Extension General Info
+Chrome extensions are quite similar to web development. Development makes use of HTML, JavaScript, and CSS with the main diffrence being that Chrome extensions make use a manifest.json file that holds infomation about the files used by the extension. HTMl is used for the screens with CSS to help with styling, then JavaScript is use for the functionalty of the pages. This application uses TypeScript to enhance development through the use of types as well as shadcn for base components and tailwindcss for styling.
+
+## Chrome Extension Development Tools
 Chrome web browser for testing.
 
-Any tool that can do HTML and Javascrpit can be used for extension devlopment. No single one seems to more recommend then any other.
+Any tool that can do HTML and JavaScript can be used for extension devlopment.
 
 ## Resoures 
-[Google getting started guide](https://developer.chrome.com/docs/extensions/mv3/getstarted/)
-Provides info on loading extensions in devlopment mode and a few examples.
+[Google Getting Started Guide](https://developer.chrome.com/docs/extensions/mv3/getstarted/) - provides info on loading extensions in devlopment mode and a few examples.
+
+## Running:
+You will need at least node v18
+
+`nvm install 18`
+
+`nvm use 18`
+
+Your first time within the repo you'll need to:
+`npm install` to install all dependencies within `node_modules`.
+Then `npm run dev` to build a development version of `bundle.js`. If you have modified the css or haven't generated the output css file you'll also need to follow the tailwindcss build process below.
+
+### Start the Tailwind CLI build process:
+`npx tailwindcss -i ./src/styles/globals.css -o ./src/output.css --watch`
+
+The `--watch` flag can be ommitted if not doing continuous development. 
+
+### To build bundle.js:
+`npm run build` to build for production
+`npm run dev` to build for development
