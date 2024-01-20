@@ -87,7 +87,7 @@ export function CreatePostForm() {
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Post Name</FormLabel>
+              <FormLabel>Post Title</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>

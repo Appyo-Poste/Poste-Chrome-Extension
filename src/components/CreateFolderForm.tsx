@@ -42,7 +42,7 @@ export function CreateFolderForm() {
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>Folder Title</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>

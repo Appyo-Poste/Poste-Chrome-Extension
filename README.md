@@ -14,11 +14,19 @@ Any tool that can do HTML and JavaScript can be used for extension devlopment.
 
 ## Running:
 You will need at least node v18
+
 `nvm install 18`
+
 `nvm use 18`
+
+Your first time within the repo you'll need to:
+`npm install` to install all dependencies within `node_modules`.
+Then `npm run dev` to build a development version of `bundle.js`. If you have modified the css or haven't generated the output css file you'll also need to follow the tailwindcss build process below.
 
 ### Start the Tailwind CLI build process:
 `npx tailwindcss -i ./src/styles/globals.css -o ./src/output.css --watch`
+
+The `--watch` flag can be ommitted if not doing continuous development. 
 
 ### To build bundle.js:
 `npm run build` to build for production
