@@ -28,10 +28,26 @@ export function CreateFolderForm() {
     },
   });
 
-  // Define create folder submit handler
   function onSubmit(values: z.infer<typeof createFolderSchema>) {
-    // @TODO something with the form values
-    console.log(values);
+    // @TODO verify this fetch
+    fetch('https://localhost:8081/folders/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // @TODO need to attach Authorization token
+      },
+      body: JSON.stringify({
+        title: values.title,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // @TODO what to do with data
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 
   return (

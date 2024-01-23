@@ -22,7 +22,6 @@ export const loginSchema = z.object({
 });
 
 export function LoginForm() {
-  // Define login form
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -31,10 +30,26 @@ export function LoginForm() {
     },
   });
 
-  // Define login submit handler
   function onSubmit(values: z.infer<typeof loginSchema>) {
-    // @TODO something with the form values
-    console.log(values);
+    // @TODO verify this fetch
+    fetch('https://localhost:8081/login/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: values.email,
+        password: values.password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // @TODO store token
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 
   return (

@@ -59,10 +59,30 @@ export function CreatePostForm() {
     },
   });
 
-  // Define create post submit handler
   function onSubmit(values: z.infer<typeof createPostSchema>) {
-    // @TODO something with the form values
-    console.log(values);
+    // @TODO verify this fetch
+    fetch('https://localhost:8081/posts/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // @TODO need to attach Authorization token
+      },
+      body: JSON.stringify({
+        title: values.title,
+        description: values.description,
+        url: values.url,
+        // @TODO something with folder_id:
+        tags: values.tags,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // @TODO what to do with data
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 
   useEffect(() => {

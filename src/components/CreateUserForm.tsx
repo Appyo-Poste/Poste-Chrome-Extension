@@ -33,10 +33,27 @@ export function CreateUserForm() {
     },
   });
 
-  // Define login submit handler
   function onSubmit(values: z.infer<typeof createUserSchema>) {
-    // @TODO something with the form values
-    console.log(values);
+    // @TODO verify this fetch
+    fetch('https://localhost:8081/users/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: values.email,
+        password: values.password,
+        first_name: values.name,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // @TODO what to do with data; set Authorization token and automatically log in?
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 
   return (
