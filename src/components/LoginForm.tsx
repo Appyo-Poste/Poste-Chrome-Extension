@@ -42,6 +42,7 @@ export function LoginForm({
     },
   });
 
+  // @TODO consider if a user doesn't have an account would I redirect them to /new-user
   function onSubmit(values: z.infer<typeof loginSchema>) {
     // @TODO verify this fetch
     fetch('https://localhost:8081/login/', {
