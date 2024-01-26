@@ -47,13 +47,24 @@ export const createPostSchema = z.object({
 
 export function CreatePostForm() {
   const [folders, setFolders] = useState<Array<Folder>>([]);
-  // Define create post form
+  const [defaultUrl, setDefaultUrl] = useState<string>('');
+  const [defaultTitle, setDefaultTitle] = useState<string>('');
+
+  useEffect(() => {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      if (tabs && tabs[0]) {
+        setDefaultUrl(tabs[0].url);
+        setDefaultTitle(tabs[0].title);
+      }
+    });
+  }, []);
+
   const form = useForm<z.infer<typeof createPostSchema>>({
     resolver: zodResolver(createPostSchema),
     defaultValues: {
-      title: '',
+      title: defaultTitle,
       description: '',
-      url: '',
+      url: defaultUrl,
       tags: '',
       folders: [],
     },
