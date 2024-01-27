@@ -28,6 +28,7 @@ const App = () => {
         <Route path="new-user" element={<CreateUserForm />} />
         <Route path="post" element={<CreatePostForm />} />
         <Route path="folder" element={<CreateFolderForm />} />
+        <Route path="success" element={<SuccessPage />} />
       </Routes>
     </Router>
   );
