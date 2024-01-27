@@ -16,6 +16,7 @@ import {
 } from './ui/Form';
 import { Input } from './ui/Input';
 import FolderList, { Folder } from './FolderList';
+import { redirect } from 'react-router-dom';
 
 const folderSchema = z.object({
   title: z.string(),
@@ -89,7 +90,7 @@ export function CreatePostForm() {
       .then((response) => response.json())
       .then((data) => {
         // @TODO what to do with data
-        console.log('Success:', data);
+        redirect('/success');
       })
       .catch((error) => {
         console.error('Error:', error);
