@@ -60,6 +60,7 @@ export function LoginForm({
         setLoggedIn(true);
         // @TODO what is structure of data so I can pass the token to setToken
         // setToken();
+        // chrome.storage.local.set({ poste: '' }, () => {});
         redirect('/post');
       })
       .catch((e) => {

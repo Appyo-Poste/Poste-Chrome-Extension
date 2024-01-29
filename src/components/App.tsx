@@ -5,6 +5,7 @@ import { CreateUserForm } from './CreateUserForm';
 import { CreatePostForm } from './CreatePostForm';
 import { CreateFolderForm } from './CreateFolderForm';
 import Index from './Index';
+import SuccessPage from './SuccessPage';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
