@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from './ui/Form';
 import { Input } from './ui/Input';
+import { redirect } from 'react-router-dom';
 
 export const createFolderSchema = z.object({
   title: z.string().min(2).max(50),
@@ -44,6 +45,7 @@ export function CreateFolderForm() {
       .then((data) => {
         // @TODO what to do with data
         console.log('Success:', data);
+        redirect('/post');
       })
       .catch((error) => {
         console.error('Error:', error);
