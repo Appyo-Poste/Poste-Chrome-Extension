@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from './ui/Form';
 import { Input } from './ui/Input';
-import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const createUserSchema = z.object({
   email: z.string().min(8).max(50),
@@ -24,6 +24,7 @@ export const createUserSchema = z.object({
 });
 
 export function CreateUserForm() {
+  const navigate = useNavigate();
   // Define login form
   const form = useForm<z.infer<typeof createUserSchema>>({
     resolver: zodResolver(createUserSchema),
@@ -36,7 +37,7 @@ export function CreateUserForm() {
 
   function onSubmit(values: z.infer<typeof createUserSchema>) {
     // @TODO verify this fetch
-    fetch('https://localhost:8081/users/', {
+    fetch(`${process.env.API_URL}users/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -50,7 +51,7 @@ export function CreateUserForm() {
       .then((response) => response.json())
       .then((data) => {
         // @TODO what to do with data; set Authorization token and automatically log in?
-        redirect('/post');
+        navigate('/post');
       })
       .catch((error) => {
         console.error('Error:', error);

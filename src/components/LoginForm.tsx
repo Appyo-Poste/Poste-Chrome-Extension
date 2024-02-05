@@ -3,7 +3,7 @@
 import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as z from 'zod';
 import { Button } from './ui/Button';
 import {
@@ -34,6 +34,8 @@ export function LoginForm({
   error,
   setError,
 }: LoginFormProps) {
+  const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -45,7 +47,7 @@ export function LoginForm({
   // @TODO consider if a user doesn't have an account would I redirect them to /new-user
   function onSubmit(values: z.infer<typeof loginSchema>) {
     // @TODO verify this fetch
-    fetch('https://localhost:8081/login/', {
+    fetch(`${process.env.API_URL}login/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -61,7 +63,7 @@ export function LoginForm({
         // @TODO what is structure of data so I can pass the token to setToken
         // setToken();
         // chrome.storage.local.set({ poste: '' }, () => {});
-        redirect('/post');
+        navigate('/post');
       })
       .catch((e) => {
         setError(e);

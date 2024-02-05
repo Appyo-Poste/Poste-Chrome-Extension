@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react';
 import { Button } from './ui/Button';
-import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
+  const navigate = useNavigate();
   const handleCreate = useCallback(() => {
-    redirect('post');
+    navigate('post');
   }, []);
 
   return (

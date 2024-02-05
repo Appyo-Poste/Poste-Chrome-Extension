@@ -14,13 +14,15 @@ import {
   FormMessage,
 } from './ui/Form';
 import { Input } from './ui/Input';
-import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const createFolderSchema = z.object({
   title: z.string().min(2).max(50),
 });
 
 export function CreateFolderForm() {
+  const navigate = useNavigate();
+
   // Define create folder form
   const form = useForm<z.infer<typeof createFolderSchema>>({
     resolver: zodResolver(createFolderSchema),
@@ -31,7 +33,7 @@ export function CreateFolderForm() {
 
   function onSubmit(values: z.infer<typeof createFolderSchema>) {
     // @TODO verify this fetch
-    fetch('https://localhost:8081/folders/', {
+    fetch(`${process.env.API_URL}folders/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -45,7 +47,7 @@ export function CreateFolderForm() {
       .then((data) => {
         // @TODO what to do with data
         console.log('Success:', data);
-        redirect('/post');
+        navigate('/post');
       })
       .catch((error) => {
         console.error('Error:', error);

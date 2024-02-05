@@ -1,15 +1,17 @@
 import React, { useCallback } from 'react';
 import { Button } from './ui/Button';
-import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PosteLogo from '../assets/PosteLogo.svg';
 
 const Index = () => {
+  const navigate = useNavigate();
+
   const handleLogin = useCallback(() => {
-    redirect('/login');
+    navigate('/login');
   }, []);
 
   const handleCreateAccount = useCallback(() => {
-    redirect('new-user');
+    navigate('new-user');
   }, []);
 
   return (

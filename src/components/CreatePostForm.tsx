@@ -16,7 +16,7 @@ import {
 } from './ui/Form';
 import { Input } from './ui/Input';
 import FolderList, { Folder } from './FolderList';
-import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const folderSchema = z.object({
   title: z.string(),
@@ -47,17 +47,19 @@ export const createPostSchema = z.object({
 });
 
 export function CreatePostForm() {
+  const navigate = useNavigate();
+
   const [folders, setFolders] = useState<Array<Folder>>([]);
   const [defaultUrl, setDefaultUrl] = useState<string>('');
   const [defaultTitle, setDefaultTitle] = useState<string>('');
 
   useEffect(() => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      if (tabs && tabs[0]) {
-        setDefaultUrl(tabs[0].url);
-        setDefaultTitle(tabs[0].title);
-      }
-    });
+    // chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    //   if (tabs && tabs[0]) {
+    //     setDefaultUrl(tabs[0].url);
+    //     setDefaultTitle(tabs[0].title);
+    //   }
+    // });
   }, []);
 
   const form = useForm<z.infer<typeof createPostSchema>>({
@@ -73,7 +75,7 @@ export function CreatePostForm() {
 
   function onSubmit(values: z.infer<typeof createPostSchema>) {
     // @TODO verify this fetch
-    fetch('https://localhost:8081/posts/', {
+    fetch(`${process.env.API_URL}posts/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -90,7 +92,7 @@ export function CreatePostForm() {
       .then((response) => response.json())
       .then((data) => {
         // @TODO what to do with data
-        redirect('/success');
+        navigate('/success');
       })
       .catch((error) => {
         console.error('Error:', error);
