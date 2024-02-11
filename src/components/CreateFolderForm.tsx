@@ -33,7 +33,7 @@ export function CreateFolderForm() {
 
   function onSubmit(values: z.infer<typeof createFolderSchema>) {
     // @TODO verify this fetch
-    fetch(`${process.env.API_URL}folders/`, {
+    fetch(`${process.env.API_URL}api/folders/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

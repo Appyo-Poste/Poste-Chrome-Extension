@@ -75,7 +75,7 @@ export function CreatePostForm() {
 
   function onSubmit(values: z.infer<typeof createPostSchema>) {
     // @TODO verify this fetch
-    fetch(`${process.env.API_URL}posts/`, {
+    fetch(`${process.env.API_URL}api/posts/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -46,7 +46,7 @@ export function LoginForm({
 
   // @TODO consider if a user doesn't have an account would I redirect them to /new-user
   function onSubmit(values: z.infer<typeof loginSchema>) {
-    fetch(`${process.env.API_URL}login/`, {
+    fetch(`${process.env.API_URL}api/login/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -54,9 +54,11 @@ export function LoginForm({
       body: JSON.stringify(values),
     })
       .then((response) => {
+        console.log('response: ', response);
         return response.json();
       })
       .then((data) => {
+        console.log('data: ', data);
         setLoggedIn(true);
         // @TODO what is structure of data so I can pass the token to setToken
         // setToken();

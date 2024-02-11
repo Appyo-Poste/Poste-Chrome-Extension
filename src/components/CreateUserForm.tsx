@@ -36,8 +36,7 @@ export function CreateUserForm() {
   });
 
   function onSubmit(values: z.infer<typeof createUserSchema>) {
-    // @TODO verify this fetch
-    fetch(`${process.env.API_URL}users/`, {
+    fetch(`${process.env.API_URL}api/users/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -45,11 +44,15 @@ export function CreateUserForm() {
       body: JSON.stringify({
         email: values.email,
         password: values.password,
-        first_name: values.name,
+        name: values.name,
       }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        console.log('response:', response);
+        response.json();
+      })
       .then((data) => {
+        console.log('data: ', data);
         // @TODO what to do with data; set Authorization token and automatically log in?
         navigate('/post');
       })
