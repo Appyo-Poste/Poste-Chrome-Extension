@@ -54,6 +54,21 @@ export function CreatePostForm() {
   const [defaultTitle, setDefaultTitle] = useState<string>('');
 
   useEffect(() => {
+    fetch(`${process.env.API_URL}api/folders/`, {
+      method: 'GET',
+      headers: {
+        // @TODO need to attach Authorization token
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // @TODO what to do with data
+        setFolders(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
     // chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     //   if (tabs && tabs[0]) {
     //     setDefaultUrl(tabs[0].url);
