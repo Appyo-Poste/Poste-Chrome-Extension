@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -17,6 +17,7 @@ import {
 import { Input } from './ui/Input';
 import FolderList, { Folder } from './FolderList';
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from './AppContext';
 
 const folderSchema = z.object({
   title: z.string(),
@@ -48,6 +49,7 @@ export const createPostSchema = z.object({
 
 export function CreatePostForm() {
   const navigate = useNavigate();
+  const { token } = useContext(AppContext);
 
   const [folders, setFolders] = useState<Array<Folder>>([]);
   const [defaultUrl, setDefaultUrl] = useState<string>('');
@@ -57,18 +59,25 @@ export function CreatePostForm() {
     fetch(`${process.env.API_URL}api/folders/`, {
       method: 'GET',
       headers: {
-        // @TODO need to attach Authorization token
+        'Content-Type': 'application/json',
+        Authorization: token ?? '',
       },
     })
       .then((response) => response.json())
       .then((data) => {
-        // @TODO what to do with data
-        setFolders(data);
+        const mappedFolders = data.map((f) => {
+          return {
+            title: f.title,
+            id: f.id,
+          };
+        });
+        setFolders(mappedFolders);
       })
       .catch((error) => {
         console.error('Error:', error);
       });
 
+    // @TODO consider abstracting the url and automatically populating it within the form
     // chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     //   if (tabs && tabs[0]) {
     //     setDefaultUrl(tabs[0].url);
@@ -94,7 +103,7 @@ export function CreatePostForm() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // @TODO need to attach Authorization token
+        Authorization: token ?? '',
       },
       body: JSON.stringify({
         title: values.title,
@@ -113,20 +122,6 @@ export function CreatePostForm() {
         console.error('Error:', error);
       });
   }
-
-  useEffect(() => {
-    // @TODO remove fake data and get a list of the folders from the user
-    setFolders([
-      {
-        title: 'sample folder one',
-        id: '1',
-      },
-      {
-        title: 'sample folder two',
-        id: '2',
-      },
-    ]);
-  }, []);
 
   return (
     <Form {...form}>
