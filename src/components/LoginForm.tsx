@@ -91,7 +91,12 @@ export function LoginForm({
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="********" {...field} required />
+                  <Input
+                    placeholder="•••••••••"
+                    {...field}
+                    required
+                    type={'password'}
+                  />
                 </FormControl>
               </FormItem>
             )}
