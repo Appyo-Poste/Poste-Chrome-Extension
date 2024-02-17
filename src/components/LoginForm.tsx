@@ -54,15 +54,11 @@ export function LoginForm({
       body: JSON.stringify(values),
     })
       .then((response) => {
-        console.log('response: ', response);
         return response.json();
       })
       .then((data) => {
-        console.log('data: ', data);
+        setToken(`Token ${data.result.token}`);
         setLoggedIn(true);
-        // @TODO what is structure of data so I can pass the token to setToken
-        // setToken();
-        // chrome.storage.local.set({ poste: '' }, () => {});
         navigate('/post');
       })
       .catch((e) => {

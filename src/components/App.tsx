@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom';
 import { LoginForm } from './LoginForm';
 import { CreateUserForm } from './CreateUserForm';
@@ -6,11 +6,12 @@ import { CreatePostForm } from './CreatePostForm';
 import { CreateFolderForm } from './CreateFolderForm';
 import Index from './Index';
 import SuccessPage from './SuccessPage';
+import { AppContext } from './AppContext';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [token, setToken] = useState<string | undefined>(undefined);
+  const { isLoggedIn, setIsLoggedIn, token, setToken } = useContext(AppContext);
   const [error, setError] = useState<string | undefined>(undefined);
+
   return (
     <Router initialEntries={['/']}>
       <Routes>
