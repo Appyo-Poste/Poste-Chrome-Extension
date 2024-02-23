@@ -102,7 +102,7 @@ export function LoginForm({
             )}
           />
           <Button type="submit" variant="outline">
-            Log in
+            Get Started
           </Button>
         </form>
       </Form>
