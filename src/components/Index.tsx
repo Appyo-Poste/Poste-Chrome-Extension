@@ -26,8 +26,24 @@ const Index = ({ setLoggedIn, setToken, error, setError }: IndexPageProps) => {
         justifyContent: 'center',
       }}
     >
-      <img src={PosteLogo} alt="Poste Logo" style={{ marginBottom: '16px' }} />
-      <h1>Find, retrieve, and save. Simple as that.</h1>
+      <img
+        src={PosteLogo}
+        alt="Poste Logo"
+        style={{
+          marginBottom: '16px',
+          width: '155px',
+        }}
+      />
+      <h1
+        style={{
+          fontSize: '16px',
+          lineHeight: '20px',
+          color: '#000000',
+          marginBottom: '60px',
+        }}
+      >
+        Find, retrieve, and save. Simple as that.
+      </h1>
       <LoginForm
         setLoggedIn={setLoggedIn}
         setToken={setToken}
