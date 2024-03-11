@@ -24,6 +24,22 @@ const folderSchema = z.object({
   id: z.string(),
 });
 
+export const formControlStyles = {
+  background: '#F0F0F0',
+  border: '1px solid #F0F0F0',
+  borderRadius: '20px',
+  fontSize: '12px',
+  color: '#747474',
+};
+
+export const formTypographyStyles = { fontSize: '18px', lineHeight: '22px' };
+
+export const formLayoutStyles = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+};
+
 export const createPostSchema = z.object({
   title: z.string().min(2).max(50),
   description: z.string().min(2).max(50),
@@ -130,9 +146,9 @@ export function CreatePostForm() {
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Post Title</FormLabel>
-              <FormControl>
+            <FormItem style={{ ...formLayoutStyles }}>
+              <FormLabel style={{ ...formTypographyStyles }}>Name</FormLabel>
+              <FormControl style={{ ...formControlStyles }}>
                 <Input {...field} required />
               </FormControl>
 
@@ -144,9 +160,11 @@ export function CreatePostForm() {
           control={form.control}
           name="description"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
+            <FormItem style={{ ...formLayoutStyles }}>
+              <FormLabel style={{ ...formTypographyStyles }}>
+                Description
+              </FormLabel>
+              <FormControl style={{ ...formControlStyles }}>
                 <Input {...field} />
               </FormControl>
             </FormItem>
@@ -156,10 +174,10 @@ export function CreatePostForm() {
           control={form.control}
           name="url"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>URL</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="https://www..." required />
+            <FormItem style={{ ...formLayoutStyles }}>
+              <FormLabel style={{ ...formTypographyStyles }}>URL</FormLabel>
+              <FormControl style={{ ...formControlStyles }}>
+                <Input {...field} placeholder="www.website.com" required />
               </FormControl>
             </FormItem>
           )}
@@ -169,9 +187,9 @@ export function CreatePostForm() {
           control={form.control}
           name="tags"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Tags</FormLabel>
-              <FormControl>
+            <FormItem style={{ ...formLayoutStyles }}>
+              <FormLabel style={{ ...formTypographyStyles }}>Tags</FormLabel>
+              <FormControl style={{ ...formControlStyles }}>
                 <Input placeholder="social, post, tags" {...field} required />
               </FormControl>
               <FormDescription>Seperate each tag with a comma</FormDescription>
