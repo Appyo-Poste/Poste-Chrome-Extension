@@ -18,6 +18,7 @@ import { Input } from './ui/Input';
 import FolderList, { Folder } from './FolderList';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from './AppContext';
+import File from '../assets/File.png';
 
 const folderSchema = z.object({
   title: z.string(),
@@ -139,65 +140,132 @@ export function CreatePostForm() {
       });
   }
 
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem style={{ ...formLayoutStyles }}>
-              <FormLabel style={{ ...formTypographyStyles }}>Name</FormLabel>
-              <FormControl style={{ ...formControlStyles }}>
-                <Input {...field} required />
-              </FormControl>
+  function onReset() {
+    form.reset({
+      title: defaultTitle,
+      description: '',
+      url: defaultUrl,
+      tags: '',
+      folders: [],
+    });
+  }
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem style={{ ...formLayoutStyles }}>
-              <FormLabel style={{ ...formTypographyStyles }}>
-                Description
-              </FormLabel>
-              <FormControl style={{ ...formControlStyles }}>
-                <Input {...field} />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="url"
-          render={({ field }) => (
-            <FormItem style={{ ...formLayoutStyles }}>
-              <FormLabel style={{ ...formTypographyStyles }}>URL</FormLabel>
-              <FormControl style={{ ...formControlStyles }}>
-                <Input {...field} placeholder="www.website.com" required />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FolderList folders={folders} />
-        <FormField
-          control={form.control}
-          name="tags"
-          render={({ field }) => (
-            <FormItem style={{ ...formLayoutStyles }}>
-              <FormLabel style={{ ...formTypographyStyles }}>Tags</FormLabel>
-              <FormControl style={{ ...formControlStyles }}>
-                <Input placeholder="social, post, tags" {...field} required />
-              </FormControl>
-              <FormDescription>Seperate each tag with a comma</FormDescription>
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Create</Button>
-      </form>
-    </Form>
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <img
+        src={File}
+        alt="File"
+        style={{
+          marginBottom: '16px',
+          width: '85px',
+        }}
+      />
+      <div style={{ width: '100%' }}>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem style={{ ...formLayoutStyles }}>
+                  <FormLabel style={{ ...formTypographyStyles }}>
+                    Name
+                  </FormLabel>
+                  <FormControl style={{ ...formControlStyles }}>
+                    <Input {...field} required />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="url"
+              render={({ field }) => (
+                <FormItem style={{ ...formLayoutStyles }}>
+                  <FormLabel style={{ ...formTypographyStyles }}>URL</FormLabel>
+                  <FormControl style={{ ...formControlStyles }}>
+                    <Input {...field} placeholder="www.website.com" required />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="tags"
+              render={({ field }) => (
+                <FormItem style={{ ...formLayoutStyles }}>
+                  <FormLabel style={{ ...formTypographyStyles }}>
+                    Tags
+                  </FormLabel>
+                  <FormControl style={{ ...formControlStyles }}>
+                    <Input
+                      placeholder="social, post, tags"
+                      {...field}
+                      required
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Seperate each tag with a comma
+                  </FormDescription>
+                </FormItem>
+              )}
+            />
+            <FolderList folders={folders} />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem style={{ ...formLayoutStyles }}>
+                  <FormLabel style={{ ...formTypographyStyles }}>
+                    Description
+                  </FormLabel>
+                  <FormControl style={{ ...formControlStyles }}>
+                    <Input {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <div
+              display="flex"
+              flexDiretion="row"
+              justifyContent="flex-end"
+              width="100%"
+            >
+              <Button
+                type="submit"
+                style={{
+                  width: '85px',
+                  background: '#357497',
+                  color: '#FFFFFF',
+                  borderRadius: '15px',
+                  marginRight: '8px',
+                }}
+              >
+                Create
+              </Button>
+              <Button
+                onClick={onReset}
+                style={{
+                  width: '85px',
+                  background: '#84D6EF',
+                  color: '#000000',
+                  borderRadius: '15px',
+                }}
+              >
+                Reset
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </div>
+    </div>
   );
 }
