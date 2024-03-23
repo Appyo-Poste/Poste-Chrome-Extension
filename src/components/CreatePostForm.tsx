@@ -14,6 +14,7 @@ import {
   FormLabel,
   FormMessage,
 } from './ui/Form';
+import TagsList from './Tags/TagsList';
 import { Input } from './ui/Input';
 import FolderList, { Folder } from './FolderList';
 import { useNavigate } from 'react-router-dom';
@@ -86,6 +87,7 @@ export function CreatePostForm() {
   const [folders, setFolders] = useState<Array<Folder>>([]);
   const [defaultUrl, setDefaultUrl] = useState<string>('');
   const [defaultTitle, setDefaultTitle] = useState<string>('');
+  const [tags, setTags] = useState<string>('');
 
   useEffect(() => {
     fetch(`${process.env.API_URL}api/folders/`, {
@@ -142,7 +144,7 @@ export function CreatePostForm() {
         description: values.description,
         url: values.url,
         // @TODO something with folder_id:
-        tags: values.tags,
+        tags: tags,
       }),
     })
       .then((response) => response.json())
@@ -156,6 +158,7 @@ export function CreatePostForm() {
   }
 
   function onReset() {
+    setTags('');
     form.reset({
       title: defaultTitle,
       description: '',
@@ -212,27 +215,16 @@ export function CreatePostForm() {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="tags"
-              render={({ field }) => (
-                <FormItem style={{ ...formLayoutStyles }}>
-                  <FormLabel style={{ ...formTypographyStyles }}>
-                    Tags
-                  </FormLabel>
-                  <FormControl style={{ ...formControlStyles }}>
-                    <Input
-                      placeholder="social, post, tags"
-                      {...field}
-                      required
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    Seperate each tag with a comma
-                  </FormDescription>
-                </FormItem>
-              )}
-            />
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <h2 style={{ ...formTypographyStyles }}>Tags</h2>
+              <TagsList tags={tags} setTags={setTags} />
+            </div>
             <div
               style={{
                 display: 'flex',
