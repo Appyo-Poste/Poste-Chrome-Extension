@@ -9,9 +9,27 @@ const Index = () => {
   }, []);
 
   return (
-    <div style={{ display: 'flex' }}>
-      <p>Post successfully created</p>
-      <Button variant="outline" onClick={handleCreate}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
+      }}
+    >
+      <h1 style={{ fontSize: '18px', lineHeight: '22px', marginBottom: '8px' }}>
+        Post Successfully Created
+      </h1>
+      <Button
+        variant="outline"
+        style={{
+          width: '170px',
+          background: '#84D6EF',
+          color: '#000000',
+          borderRadius: '15px',
+        }}
+        onClick={handleCreate}
+      >
         Create Another Post
       </Button>
     </div>
