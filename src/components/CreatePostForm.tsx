@@ -175,10 +175,10 @@ export function CreatePostForm() {
               render={({ field }) => (
                 <FormItem style={{ ...formLayoutStyles }}>
                   <FormLabel style={{ ...formTypographyStyles }}>
-                    Name
+                    Filename
                   </FormLabel>
                   <FormControl style={{ ...formControlStyles }}>
-                    <Input {...field} required />
+                    <Input placeholder="Name here..." {...field} required />
                   </FormControl>
 
                   <FormMessage />
@@ -228,7 +228,7 @@ export function CreatePostForm() {
                     Description
                   </FormLabel>
                   <FormControl style={{ ...formControlStyles }}>
-                    <Input {...field} />
+                    <Input placeholder="Description here..." {...field} />
                   </FormControl>
                 </FormItem>
               )}
@@ -243,20 +243,20 @@ export function CreatePostForm() {
                 type="submit"
                 style={{
                   width: '85px',
-                  background: '#357497',
-                  color: '#FFFFFF',
+                  background: '#84D6EF',
+                  color: '#000000',
                   borderRadius: '15px',
                   marginRight: '8px',
                 }}
               >
-                Create
+                Save
               </Button>
               <Button
                 onClick={onReset}
                 style={{
                   width: '85px',
-                  background: '#84D6EF',
-                  color: '#000000',
+                  background: '#357497',
+                  color: '#FFFFFF',
                   borderRadius: '15px',
                 }}
               >
