@@ -64,6 +64,21 @@ export const createPostSchema = z.object({
     ),
 });
 
+// const fakeFolders = [
+//   {
+//     title: 'Work Documents',
+//     id: 'folder_1',
+//   },
+//   {
+//     title: 'Personal Photos',
+//     id: 'folder_2',
+//   },
+//   {
+//     title: 'Music Collection',
+//     id: 'folder_3',
+//   },
+// ];
+
 export function CreatePostForm() {
   const navigate = useNavigate();
   const { token } = useContext(AppContext);
@@ -218,7 +233,16 @@ export function CreatePostForm() {
                 </FormItem>
               )}
             />
-            <FolderList folders={folders} />
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <h2 style={{ ...formTypographyStyles }}>Move To</h2>
+              <FolderList folders={folders} />
+            </div>
             <FormField
               control={form.control}
               name="description"
