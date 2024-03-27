@@ -1,14 +1,17 @@
 import React, { useCallback } from 'react';
-import { Button } from './ui/Button';
 import { useNavigate } from 'react-router-dom';
-import PosteLogo from '../assets/PosteLogo.svg';
+import PosteLogo from '../assets/PosteName.png';
+import { LoginForm } from './LoginForm';
 
-const Index = () => {
+interface IndexPageProps {
+  setLoggedIn: (isLoggedIn: boolean) => void;
+  setToken: (token: string) => void;
+  error?: string;
+  setError: (error?: string) => void;
+}
+
+const Index = ({ setLoggedIn, setToken, error, setError }: IndexPageProps) => {
   const navigate = useNavigate();
-
-  const handleLogin = useCallback(() => {
-    navigate('/login');
-  }, []);
 
   const handleCreateAccount = useCallback(() => {
     navigate('new-user');
@@ -26,20 +29,36 @@ const Index = () => {
       <img
         src={PosteLogo}
         alt="Poste Logo"
-        style={{ width: '75px', marginBottom: '16px' }}
+        style={{
+          marginBottom: '16px',
+          width: '155px',
+        }}
       />
-      <div style={{ display: 'flex' }}>
-        <Button
-          variant="outline"
-          onClick={handleLogin}
-          style={{ marginRight: '16px' }}
+      <h1
+        style={{
+          fontSize: '16px',
+          lineHeight: '20px',
+          color: '#000000',
+          marginBottom: '60px',
+        }}
+      >
+        Find, retrieve, and save. Simple as that.
+      </h1>
+      <LoginForm
+        setLoggedIn={setLoggedIn}
+        setToken={setToken}
+        setError={setError}
+        error={error}
+      />
+      <p>
+        {`Don't have an account? `}
+        <span
+          onClick={handleCreateAccount}
+          style={{ cursor: 'pointer', color: '#357497' }}
         >
-          Login
-        </Button>
-        <Button variant="outline" onClick={handleCreateAccount}>
-          Create Account
-        </Button>
-      </div>
+          Sign Up
+        </span>
+      </p>
     </div>
   );
 };

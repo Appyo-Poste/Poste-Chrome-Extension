@@ -75,9 +75,28 @@ export function LoginForm({
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel
+                  style={{
+                    fontSize: '16px',
+                    lineHeight: '20px',
+                    color: '#000000',
+                    fontWeight: '400',
+                  }}
+                >
+                  Email
+                </FormLabel>
                 <FormControl>
-                  <Input placeholder="email@mail.com" {...field} required />
+                  <Input
+                    placeholder="email@mail.com"
+                    {...field}
+                    required
+                    style={{
+                      width: '290px',
+                      height: '40px',
+                      borderRadius: '10px',
+                      background: '#F0F0F0',
+                    }}
+                  />
                 </FormControl>
 
                 <FormMessage />
@@ -89,20 +108,48 @@ export function LoginForm({
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel
+                  style={{
+                    fontSize: '16px',
+                    lineHeight: '20px',
+                    color: '#000000',
+                    fontWeight: '400',
+                  }}
+                >
+                  Password
+                </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="•••••••••"
+                    placeholder="**********"
                     {...field}
                     required
                     type={'password'}
+                    style={{
+                      width: '290px',
+                      height: '40px',
+                      borderRadius: '10px',
+                      background: '#F0F0F0',
+                    }}
                   />
                 </FormControl>
               </FormItem>
             )}
           />
-          <Button type="submit" variant="outline">
-            Log in
+          <Button
+            type="submit"
+            variant="outline"
+            style={{
+              width: '290px',
+              height: '40px',
+              background:
+                'linear-gradient(180deg, #357497 0%, rgba(53, 116, 151, 0.69) 100%)',
+              border: 'none',
+              color: '#FFFFFF',
+              marginTop: '60px',
+              marginBottom: '15px',
+            }}
+          >
+            Get Started
           </Button>
         </form>
       </Form>
