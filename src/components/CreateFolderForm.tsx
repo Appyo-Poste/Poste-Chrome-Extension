@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -14,12 +14,17 @@ import {
   FormMessage,
 } from './ui/Form';
 import { Input } from './ui/Input';
+import { useNavigate } from 'react-router-dom';
+import { AppContext } from './AppContext';
 
 export const createFolderSchema = z.object({
   title: z.string().min(2).max(50),
 });
 
 export function CreateFolderForm() {
+  const { token } = useContext(AppContext);
+  const navigate = useNavigate();
+
   // Define create folder form
   const form = useForm<z.infer<typeof createFolderSchema>>({
     resolver: zodResolver(createFolderSchema),
@@ -28,10 +33,24 @@ export function CreateFolderForm() {
     },
   });
 
-  // Define create folder submit handler
   function onSubmit(values: z.infer<typeof createFolderSchema>) {
-    // @TODO something with the form values
-    console.log(values);
+    fetch(`${process.env.API_URL}api/folders/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token ?? '',
+      },
+      body: JSON.stringify({
+        title: values.title,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        navigate('/post');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 
   return (
