@@ -50,7 +50,6 @@ export function CreateFolderForm() {
         title: values.title,
       }),
     })
-      .then((response) => response.json())
       .then((data) => {
         navigate('/post');
       })
