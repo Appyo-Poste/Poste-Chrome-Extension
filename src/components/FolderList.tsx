@@ -9,6 +9,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/DropdownMenu';
+import { formControlStyles } from './CreatePostForm';
+import { useNavigate } from 'react-router-dom';
 
 type Checked = DropdownMenuCheckboxItemProps['checked'];
 
@@ -22,27 +24,63 @@ interface FolderListProps {
 }
 
 const FolderList = ({ folders }: FolderListProps) => {
-  // @TODO update this state hook
-  const [selectedFolderId, setSelectedFolderId] = React.useState<string>('2');
+  const navigate = useNavigate();
+
+  const [selectedFolderId, setSelectedFolderId] = React.useState<
+    string | undefined
+  >(undefined);
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline">Associated Folder</Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>Select Folder for Post</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        {folders.map(({ id, title }: Folder) => (
-          <DropdownMenuCheckboxItem
-            checked={selectedFolderId === id}
-            onCheckedChange={() => setSelectedFolderId(id)}
-            key={id}
+    <div style={{ width: '100%' }}>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="outline"
+            style={{
+              ...formControlStyles,
+              marginTop: '8px',
+              width: '100%',
+              textAlign: 'left',
+              justifyContent: 'left',
+            }}
           >
-            {title}
-          </DropdownMenuCheckboxItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+            {selectedFolderId === undefined
+              ? 'Move file to...'
+              : folders[folders.findIndex((f) => f.id === selectedFolderId)]
+                  .title}
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          className="w-56"
+          style={{
+            border: '1px solid #F0F0F0',
+            borderRadius: '20px',
+            fontSize: '12px',
+            color: '#747474',
+          }}
+        >
+          {folders.length > 0 && (
+            <DropdownMenuLabel>Select Folder</DropdownMenuLabel>
+          )}
+          {folders.length > 0 && <DropdownMenuSeparator />}
+          {folders.map(({ id, title }: Folder) => (
+            <DropdownMenuCheckboxItem
+              checked={selectedFolderId === id}
+              onCheckedChange={() => setSelectedFolderId(id)}
+              key={id}
+            >
+              {title}
+            </DropdownMenuCheckboxItem>
+          ))}
+          {folders.length > 0 && <DropdownMenuSeparator />}
+          <DropdownMenuLabel
+            style={{ cursor: 'pointer' }}
+            onClick={() => navigate('/folder')}
+          >
+            Create Folder
+          </DropdownMenuLabel>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   );
 };
 

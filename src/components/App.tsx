@@ -15,8 +15,20 @@ const App = () => {
   return (
     <Router initialEntries={['/']}>
       <Routes>
-        <Route path="" index element={<Index />} />
         <Route
+          path=""
+          index
+          element={
+            <Index
+              setLoggedIn={setIsLoggedIn}
+              setToken={setToken}
+              setError={setError}
+              error={error}
+            />
+          }
+        />
+        {/* /login will likely be deprecated since Index now contains the LoginForm */}
+        {/* <Route
           path="login"
           element={
             <LoginForm
@@ -26,7 +38,7 @@ const App = () => {
               error={error}
             />
           }
-        />
+        /> */}
         <Route path="new-user" element={<CreateUserForm />} />
         <Route path="post" element={<CreatePostForm />} />
         <Route path="folder" element={<CreateFolderForm />} />

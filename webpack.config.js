@@ -28,7 +28,8 @@ module.exports = (env) => {
           test: /\.css$/,
           use: ['style-loader', 'css-loader'],
         },
-        { test: /\.svg$/, use: ['file-loader'] },
+        { test: /\.(svg|png)$/, use: ['file-loader'] },
+        ,
       ],
     },
     plugins: [

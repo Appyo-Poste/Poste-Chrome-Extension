@@ -14,15 +14,33 @@ import {
   FormLabel,
   FormMessage,
 } from './ui/Form';
+import TagsList from './Tags/TagsList';
 import { Input } from './ui/Input';
 import FolderList, { Folder } from './FolderList';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from './AppContext';
+import File from '../assets/File.png';
 
 const folderSchema = z.object({
   title: z.string(),
   id: z.string(),
 });
+
+export const formControlStyles = {
+  background: '#F0F0F0',
+  border: '1px solid #F0F0F0',
+  borderRadius: '20px',
+  fontSize: '12px',
+  color: '#747474',
+};
+
+export const formTypographyStyles = { fontSize: '18px', lineHeight: '22px' };
+
+export const formLayoutStyles = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+};
 
 export const createPostSchema = z.object({
   title: z.string().min(2).max(50),
@@ -47,6 +65,21 @@ export const createPostSchema = z.object({
     ),
 });
 
+// const fakeFolders = [
+//   {
+//     title: 'Work Documents',
+//     id: 'folder_1',
+//   },
+//   {
+//     title: 'Personal Photos',
+//     id: 'folder_2',
+//   },
+//   {
+//     title: 'Music Collection',
+//     id: 'folder_3',
+//   },
+// ];
+
 export function CreatePostForm() {
   const navigate = useNavigate();
   const { token } = useContext(AppContext);
@@ -54,6 +87,7 @@ export function CreatePostForm() {
   const [folders, setFolders] = useState<Array<Folder>>([]);
   const [defaultUrl, setDefaultUrl] = useState<string>('');
   const [defaultTitle, setDefaultTitle] = useState<string>('');
+  const [tags, setTags] = useState<string>('');
 
   useEffect(() => {
     fetch(`${process.env.API_URL}api/folders/`, {
@@ -110,7 +144,7 @@ export function CreatePostForm() {
         description: values.description,
         url: values.url,
         // @TODO something with folder_id:
-        tags: values.tags,
+        tags: tags,
       }),
     })
       .then((response) => response.json())
@@ -123,63 +157,131 @@ export function CreatePostForm() {
       });
   }
 
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Post Title</FormLabel>
-              <FormControl>
-                <Input {...field} required />
-              </FormControl>
+  function onReset() {
+    setTags('');
+    form.reset({
+      title: defaultTitle,
+      description: '',
+      url: defaultUrl,
+      tags: '',
+      folders: [],
+    });
+  }
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="url"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>URL</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="https://www..." required />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FolderList folders={folders} />
-        <FormField
-          control={form.control}
-          name="tags"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Tags</FormLabel>
-              <FormControl>
-                <Input placeholder="social, post, tags" {...field} required />
-              </FormControl>
-              <FormDescription>Seperate each tag with a comma</FormDescription>
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Create</Button>
-      </form>
-    </Form>
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <img
+        src={File}
+        alt="File"
+        style={{
+          marginBottom: '16px',
+          width: '85px',
+        }}
+      />
+      <div style={{ width: '100%' }}>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem style={{ ...formLayoutStyles }}>
+                  <FormLabel style={{ ...formTypographyStyles }}>
+                    Filename
+                  </FormLabel>
+                  <FormControl style={{ ...formControlStyles }}>
+                    <Input placeholder="Name here..." {...field} required />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="url"
+              render={({ field }) => (
+                <FormItem style={{ ...formLayoutStyles }}>
+                  <FormLabel style={{ ...formTypographyStyles }}>URL</FormLabel>
+                  <FormControl style={{ ...formControlStyles }}>
+                    <Input {...field} placeholder="www.website.com" required />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <h2 style={{ ...formTypographyStyles }}>Tags</h2>
+              <TagsList tags={tags} setTags={setTags} />
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <h2 style={{ ...formTypographyStyles }}>Move To</h2>
+              <FolderList folders={folders} />
+            </div>
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem style={{ ...formLayoutStyles }}>
+                  <FormLabel style={{ ...formTypographyStyles }}>
+                    Description
+                  </FormLabel>
+                  <FormControl style={{ ...formControlStyles }}>
+                    <Input placeholder="Description here..." {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <div
+              display="flex"
+              flexDiretion="row"
+              justifyContent="flex-end"
+              width="100%"
+            >
+              <Button
+                type="submit"
+                style={{
+                  width: '85px',
+                  background: '#84D6EF',
+                  color: '#000000',
+                  borderRadius: '15px',
+                  marginRight: '8px',
+                }}
+              >
+                Save
+              </Button>
+              <Button
+                onClick={onReset}
+                style={{
+                  width: '85px',
+                  background: '#357497',
+                  color: '#FFFFFF',
+                  borderRadius: '15px',
+                }}
+              >
+                Reset
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </div>
+    </div>
   );
 }

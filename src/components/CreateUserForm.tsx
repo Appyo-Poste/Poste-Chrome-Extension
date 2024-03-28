@@ -69,9 +69,28 @@ export function CreateUserForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel
+                style={{
+                  fontSize: '16px',
+                  lineHeight: '20px',
+                  color: '#000000',
+                  fontWeight: '400',
+                }}
+              >
+                Name
+              </FormLabel>
               <FormControl>
-                <Input {...field} required />
+                <Input
+                  {...field}
+                  required
+                  placeholder="First and last name"
+                  style={{
+                    width: '290px',
+                    height: '40px',
+                    borderRadius: '10px',
+                    background: '#F0F0F0',
+                  }}
+                />
               </FormControl>
             </FormItem>
           )}
@@ -81,9 +100,28 @@ export function CreateUserForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel
+                style={{
+                  fontSize: '16px',
+                  lineHeight: '20px',
+                  color: '#000000',
+                  fontWeight: '400',
+                }}
+              >
+                Email
+              </FormLabel>
               <FormControl>
-                <Input placeholder="email@mail.com" {...field} required />
+                <Input
+                  placeholder="email@mail.com"
+                  {...field}
+                  required
+                  style={{
+                    width: '290px',
+                    height: '40px',
+                    borderRadius: '10px',
+                    background: '#F0F0F0',
+                  }}
+                />
               </FormControl>
 
               <FormMessage />
@@ -95,9 +133,28 @@ export function CreateUserForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel
+                style={{
+                  fontSize: '16px',
+                  lineHeight: '20px',
+                  color: '#000000',
+                  fontWeight: '400',
+                }}
+              >
+                Password
+              </FormLabel>
               <FormControl>
-                <Input placeholder="********" {...field} required />
+                <Input
+                  placeholder="**********"
+                  {...field}
+                  required
+                  style={{
+                    width: '290px',
+                    height: '40px',
+                    borderRadius: '10px',
+                    background: '#F0F0F0',
+                  }}
+                />
               </FormControl>
               <FormDescription>
                 Your password should be at least eight characters.
@@ -105,7 +162,20 @@ export function CreateUserForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" variant="outline">
+        <Button
+          type="submit"
+          variant="outline"
+          style={{
+            width: '290px',
+            height: '40px',
+            background:
+              'linear-gradient(180deg, #357497 0%, rgba(53, 116, 151, 0.69) 100%)',
+            border: 'none',
+            color: '#FFFFFF',
+            marginTop: '60px',
+            marginBottom: '15px',
+          }}
+        >
           Submit
         </Button>
       </form>
