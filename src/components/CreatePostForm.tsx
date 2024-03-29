@@ -118,7 +118,7 @@ export function CreatePostForm() {
     //     setDefaultTitle(tabs[0].title);
     //   }
     // });
-  }, []);
+  }, [token]);
 
   const form = useForm<z.infer<typeof createPostSchema>>({
     resolver: zodResolver(createPostSchema),
