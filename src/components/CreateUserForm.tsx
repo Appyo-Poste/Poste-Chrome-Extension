@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -16,6 +16,7 @@ import {
 } from './ui/Form';
 import { Input } from './ui/Input';
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from './AppContext';
 
 export const createUserSchema = z.object({
   email: z.string().min(8).max(50),
@@ -25,6 +26,8 @@ export const createUserSchema = z.object({
 
 export function CreateUserForm() {
   const navigate = useNavigate();
+  const { setToken, setIsLoggedIn } = useContext(AppContext);
+
   // Define login form
   const form = useForm<z.infer<typeof createUserSchema>>({
     resolver: zodResolver(createUserSchema),
@@ -48,12 +51,24 @@ export function CreateUserForm() {
       }),
     })
       .then((response) => {
-        console.log('response:', response);
-        response.json();
+        // response does not contain a body with the token thus we have to "login" again
+        return fetch(`${process.env.API_URL}api/login/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: values.email,
+            password: values.password,
+          }),
+        });
+      })
+      .then((response) => {
+        return response.json();
       })
       .then((data) => {
-        console.log('data: ', data);
-        // @TODO what to do with data; set Authorization token and automatically log in?
+        setToken(`Token ${data.result.token}`);
+        setIsLoggedIn(true);
         navigate('/post');
       })
       .catch((error) => {
