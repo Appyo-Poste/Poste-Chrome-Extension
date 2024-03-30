@@ -45,24 +45,7 @@ export const formLayoutStyles = {
 export const createPostSchema = z.object({
   title: z.string().min(2).max(50),
   description: z.string().min(2).max(50),
-  url: z.string().min(2).max(50),
-  folders: z.array(folderSchema),
-  tags: z
-    .string()
-    .min(2)
-    .max(100)
-    .refine(
-      (data) => {
-        // Split the string by comma and trim whitespace from each tag
-        const tagsArray = data.split(',').map((tag) => tag.trim());
-        // Check each tag is not empty and does not exceed the maximum length
-        return tagsArray.every((tag) => tag.length > 0 && tag.length <= 25);
-      },
-      {
-        message:
-          'Tags must be a comma-separated list, each tag should be non-empty and up to 25 characters long.',
-      }
-    ),
+  url: z.string().min(2),
 });
 
 // const fakeFolders = [
@@ -85,6 +68,9 @@ export function CreatePostForm() {
   const { token } = useContext(AppContext);
 
   const [folders, setFolders] = useState<Array<Folder>>([]);
+  const [selectedFolderId, setSelectedFolderId] = React.useState<
+    string | undefined
+  >(undefined);
   const [defaultUrl, setDefaultUrl] = useState<string>('');
   const [defaultTitle, setDefaultTitle] = useState<string>('');
   const [tags, setTags] = useState<string>('');
@@ -126,13 +112,11 @@ export function CreatePostForm() {
       title: defaultTitle,
       description: '',
       url: defaultUrl,
-      tags: '',
-      folders: [],
     },
   });
 
   function onSubmit(values: z.infer<typeof createPostSchema>) {
-    // @TODO verify this fetch
+    console.log('values: ', values);
     fetch(`${process.env.API_URL}api/posts/`, {
       method: 'POST',
       headers: {
@@ -143,7 +127,7 @@ export function CreatePostForm() {
         title: values.title,
         description: values.description,
         url: values.url,
-        // @TODO something with folder_id:
+        folder_id: selectedFolderId,
         tags: tags,
       }),
     })
@@ -233,7 +217,11 @@ export function CreatePostForm() {
               }}
             >
               <h2 style={{ ...formTypographyStyles }}>Move To</h2>
-              <FolderList folders={folders} />
+              <FolderList
+                folders={folders}
+                selectedFolderId={selectedFolderId}
+                setSelectedFolderId={setSelectedFolderId}
+              />
             </div>
             <FormField
               control={form.control}

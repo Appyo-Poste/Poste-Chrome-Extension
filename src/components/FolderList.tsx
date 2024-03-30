@@ -21,14 +21,17 @@ export interface Folder {
 
 interface FolderListProps {
   folders: Array<Folder>;
+  selectedFolderId?: string;
+  setSelectedFolderId: (folderId: string) => void;
 }
 
-const FolderList = ({ folders }: FolderListProps) => {
+const FolderList = ({
+  folders,
+  selectedFolderId,
+  setSelectedFolderId,
+}: FolderListProps) => {
   const navigate = useNavigate();
 
-  const [selectedFolderId, setSelectedFolderId] = React.useState<
-    string | undefined
-  >(undefined);
   return (
     <div style={{ width: '100%' }}>
       <DropdownMenu>
