@@ -66,6 +66,8 @@ export function CreateFolderForm() {
         alignItems: 'center',
         justifyContent: 'center',
         height: '100vh',
+        width: '90%',
+        margin: 'auto',
       }}
     >
       <img
@@ -73,7 +75,7 @@ export function CreateFolderForm() {
         alt="Folder"
         style={{
           marginBottom: '16px',
-          width: '85px',
+          width: '35px',
         }}
       />
       <div style={{ width: '100%' }}>

@@ -116,7 +116,6 @@ export function CreatePostForm() {
   });
 
   function onSubmit(values: z.infer<typeof createPostSchema>) {
-    console.log('values: ', values);
     fetch(`${process.env.API_URL}api/posts/`, {
       method: 'POST',
       headers: {
@@ -131,9 +130,7 @@ export function CreatePostForm() {
         tags: tags,
       }),
     })
-      .then((response) => response.json())
       .then((data) => {
-        // @TODO what to do with data
         navigate('/success');
       })
       .catch((error) => {
@@ -160,6 +157,8 @@ export function CreatePostForm() {
         alignItems: 'center',
         justifyContent: 'center',
         height: '100vh',
+        width: '90%',
+        margin: 'auto',
       }}
     >
       <img
@@ -167,7 +166,7 @@ export function CreatePostForm() {
         alt="File"
         style={{
           marginBottom: '16px',
-          width: '85px',
+          width: '35px',
         }}
       />
       <div style={{ width: '100%' }}>

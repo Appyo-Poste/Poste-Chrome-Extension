@@ -24,6 +24,8 @@ const Index = ({ setLoggedIn, setToken, error, setError }: IndexPageProps) => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        height: '100vh',
+        margin: 'auto',
       }}
     >
       <img
