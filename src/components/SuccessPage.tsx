@@ -15,6 +15,8 @@ const Index = () => {
         flexDirection: 'column',
         alignItems: 'center',
         width: '100%',
+        justifyContent: 'center',
+        height: '100vh',
       }}
     >
       <h1 style={{ fontSize: '18px', lineHeight: '22px', marginBottom: '8px' }}>
