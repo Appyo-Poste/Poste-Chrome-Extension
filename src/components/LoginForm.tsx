@@ -154,7 +154,7 @@ export function LoginForm({
         </form>
       </Form>
       {/* @TODO Add formatting to error */}
-      <p>{error}</p>
+      <p style={{ color: 'red' }}>{error}</p>
     </>
   );
 }
