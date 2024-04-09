@@ -74,7 +74,14 @@ export function CreatePostForm() {
   const [defaultUrl, setDefaultUrl] = useState<string>('');
   const [defaultTitle, setDefaultTitle] = useState<string>('');
   const [tags, setTags] = useState<string>('');
-
+  const form = useForm<z.infer<typeof createPostSchema>>({
+    resolver: zodResolver(createPostSchema),
+    defaultValues: {
+      title: defaultTitle,
+      description: '',
+      url: defaultUrl,
+    },
+  });
   useEffect(() => {
     fetch(`${process.env.API_URL}api/folders/`, {
       method: 'GET',
@@ -92,28 +99,22 @@ export function CreatePostForm() {
           };
         });
         setFolders(mappedFolders);
+        chrome.tabs.query(
+          { active: true, currentWindow: true },
+          function (tabs) {
+            if (tabs && tabs[0]) {
+              setDefaultUrl(tabs[0].url);
+              setDefaultTitle(tabs[0].title);
+              form.setValue('title', tabs[0].title);
+              form.setValue('url', tabs[0].url);
+            }
+          }
+        );
       })
       .catch((error) => {
         console.error('Error:', error);
       });
-
-    // @TODO consider abstracting the url and automatically populating it within the form
-    // chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    //   if (tabs && tabs[0]) {
-    //     setDefaultUrl(tabs[0].url);
-    //     setDefaultTitle(tabs[0].title);
-    //   }
-    // });
   }, [token]);
-
-  const form = useForm<z.infer<typeof createPostSchema>>({
-    resolver: zodResolver(createPostSchema),
-    defaultValues: {
-      title: defaultTitle,
-      description: '',
-      url: defaultUrl,
-    },
-  });
 
   function onSubmit(values: z.infer<typeof createPostSchema>) {
     fetch(`${process.env.API_URL}api/posts/`, {
@@ -148,7 +149,6 @@ export function CreatePostForm() {
       folders: [],
     });
   }
-
   return (
     <div
       style={{
