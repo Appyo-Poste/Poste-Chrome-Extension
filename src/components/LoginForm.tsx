@@ -57,7 +57,9 @@ export function LoginForm({
         return response.json();
       })
       .then((data) => {
-        setToken(`Token ${data.result.token}`);
+        const _token = `Token ${data.result.token}`;
+        setToken(_token);
+        chrome.storage.local.set({ poste: _token }, () => {});
         setLoggedIn(true);
         navigate('/post');
       })
