@@ -23,8 +23,6 @@ type AppContextProviderProps = {
 };
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
-  // @TODO mature this to use local storage once ported to chrome extension
-  // chrome.storage.local.set({ poste: '' }, () => {});
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [usersFullName, setUsersFullName] = useState<string>('');
   const [token, setToken] = useState<string>('');

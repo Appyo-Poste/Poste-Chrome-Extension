@@ -44,7 +44,7 @@ export function LoginForm({
     },
   });
 
-  // @TODO consider if a user doesn't have an account would I redirect them to /new-user
+  // @TODO consider if a user doesn't have an account, would I redirect them to /new-user
   function onSubmit(values: z.infer<typeof loginSchema>) {
     fetch(`${process.env.API_URL}api/login/`, {
       method: 'POST',
@@ -155,7 +155,6 @@ export function LoginForm({
           </Button>
         </form>
       </Form>
-      {/* @TODO Add formatting to error */}
       <p style={{ color: 'red' }}>{error}</p>
     </>
   );

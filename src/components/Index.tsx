@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PosteLogo from '../assets/PosteName.png';
 import { LoginForm } from './LoginForm';
@@ -12,6 +12,16 @@ interface IndexPageProps {
 
 const Index = ({ setLoggedIn, setToken, error, setError }: IndexPageProps) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    chrome.storage.local.get(['poste'], (result) => {
+      if (result && result.poste !== '') {
+        setToken(result.poste);
+        setLoggedIn(true);
+        navigate('/post');
+      }
+    });
+  });
 
   const handleCreateAccount = useCallback(() => {
     navigate('new-user');
