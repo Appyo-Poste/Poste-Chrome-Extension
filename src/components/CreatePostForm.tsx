@@ -63,7 +63,11 @@ export const createPostSchema = z.object({
 //   },
 // ];
 
-export function CreatePostForm() {
+export function CreatePostForm({
+  setIsLoggedIn,
+}: {
+  setIsLoggedIn: (isLoggedIn: boolean) => void;
+}) {
   const navigate = useNavigate();
   const { token } = useContext(AppContext);
 
@@ -148,6 +152,12 @@ export function CreatePostForm() {
       tags: '',
       folders: [],
     });
+  }
+
+  function logOff() {
+    chrome.storage.local.set({ poste: '' }, () => {});
+    setIsLoggedIn(false);
+    navigate('/');
   }
   return (
     <div
@@ -239,33 +249,55 @@ export function CreatePostForm() {
               )}
             />
             <div
-              display="flex"
-              flexDiretion="row"
-              justifyContent="flex-end"
-              width="100%"
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '100%',
+                flexWrap: 'no-wrap',
+              }}
             >
+              <div style={{ width: '200px' }}>
+                <Button
+                  type="submit"
+                  style={{
+                    width: '85px',
+                    height: '40px',
+                    background: '#84D6EF',
+                    color: '#000000',
+                    borderRadius: '15px',
+                    marginRight: '8px',
+                  }}
+                >
+                  Save
+                </Button>
+                <Button
+                  onClick={onReset}
+                  style={{
+                    width: '85px',
+                    height: '40px',
+                    background: '#357497',
+                    color: '#FFFFFF',
+                    borderRadius: '15px',
+                  }}
+                >
+                  Reset
+                </Button>
+              </div>
               <Button
-                type="submit"
+                type="button"
+                onClick={logOff}
+                variant="outline"
                 style={{
-                  width: '85px',
-                  background: '#84D6EF',
-                  color: '#000000',
-                  borderRadius: '15px',
-                  marginRight: '8px',
-                }}
-              >
-                Save
-              </Button>
-              <Button
-                onClick={onReset}
-                style={{
-                  width: '85px',
-                  background: '#357497',
+                  width: '85x',
+                  height: '40px',
+                  background:
+                    'linear-gradient(180deg, #357497 0%, rgba(53, 116, 151, 0.69) 100%)',
+                  border: 'none',
                   color: '#FFFFFF',
-                  borderRadius: '15px',
                 }}
               >
-                Reset
+                Log Off
               </Button>
             </div>
           </form>
