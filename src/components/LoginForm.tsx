@@ -44,7 +44,7 @@ export function LoginForm({
     },
   });
 
-  // @TODO consider if a user doesn't have an account would I redirect them to /new-user
+  // @TODO consider if a user doesn't have an account, would I redirect them to /new-user
   function onSubmit(values: z.infer<typeof loginSchema>) {
     fetch(`${process.env.API_URL}api/login/`, {
       method: 'POST',
@@ -57,7 +57,9 @@ export function LoginForm({
         return response.json();
       })
       .then((data) => {
-        setToken(`Token ${data.result.token}`);
+        const _token = `Token ${data.result.token}`;
+        setToken(_token);
+        chrome.storage.local.set({ poste: _token }, () => {});
         setLoggedIn(true);
         navigate('/post');
       })
@@ -153,8 +155,7 @@ export function LoginForm({
           </Button>
         </form>
       </Form>
-      {/* @TODO Add formatting to error */}
-      <p>{error}</p>
+      <p style={{ color: 'red' }}>{error}</p>
     </>
   );
 }

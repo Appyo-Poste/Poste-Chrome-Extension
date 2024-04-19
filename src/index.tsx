@@ -9,12 +9,9 @@ if (container !== null) {
   const root = createRoot(container);
   root.render(
     <React.StrictMode>
-      {/* <BrowserRouter> */}
-      {/* @TODO consider adding theme provider here as well */}
       <AppContextProvider>
         <App />
       </AppContextProvider>
-      {/* </BrowserRouter> */}
     </React.StrictMode>
   );
 } else {

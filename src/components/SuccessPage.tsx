@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const Index = () => {
   const navigate = useNavigate();
   const handleCreate = useCallback(() => {
-    navigate('post');
+    navigate('/post');
   }, []);
 
   return (
@@ -14,7 +14,9 @@ const Index = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        width: '100%',
+        width: '90%',
+        justifyContent: 'center',
+        height: '100vh',
       }}
     >
       <h1 style={{ fontSize: '18px', lineHeight: '22px', marginBottom: '8px' }}>

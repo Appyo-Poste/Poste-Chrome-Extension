@@ -49,6 +49,7 @@ export const CreateTag = ({
 
   const handleKeyPress = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' && inputValue.trim()) {
+      event.preventDefault();
       onCreate(inputValue);
       setInputValue('');
     }

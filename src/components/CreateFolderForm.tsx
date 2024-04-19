@@ -50,7 +50,6 @@ export function CreateFolderForm() {
         title: values.title,
       }),
     })
-      .then((response) => response.json())
       .then((data) => {
         navigate('/post');
       })
@@ -65,6 +64,10 @@ export function CreateFolderForm() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        width: '90%',
+        margin: 'auto',
       }}
     >
       <img
@@ -72,7 +75,7 @@ export function CreateFolderForm() {
         alt="Folder"
         style={{
           marginBottom: '16px',
-          width: '85px',
+          width: '35px',
         }}
       />
       <div style={{ width: '100%' }}>

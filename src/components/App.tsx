@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom';
 import { LoginForm } from './LoginForm';
 import { CreateUserForm } from './CreateUserForm';
@@ -27,20 +27,11 @@ const App = () => {
             />
           }
         />
-        {/* /login will likely be deprecated since Index now contains the LoginForm */}
-        {/* <Route
-          path="login"
-          element={
-            <LoginForm
-              setLoggedIn={setIsLoggedIn}
-              setToken={setToken}
-              setError={setError}
-              error={error}
-            />
-          }
-        /> */}
         <Route path="new-user" element={<CreateUserForm />} />
-        <Route path="post" element={<CreatePostForm />} />
+        <Route
+          path="post"
+          element={<CreatePostForm setIsLoggedIn={setIsLoggedIn} />}
+        />
         <Route path="folder" element={<CreateFolderForm />} />
         <Route path="success" element={<SuccessPage />} />
       </Routes>

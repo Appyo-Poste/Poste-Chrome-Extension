@@ -10,6 +10,7 @@ module.exports = (env) => {
 
   return {
     mode: 'development',
+    devtool: 'source-map',
     entry: {
       popup: path.join(__dirname, 'src', 'index.tsx'),
     },

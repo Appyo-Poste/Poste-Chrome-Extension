@@ -1,13 +1,13 @@
 {
     "name": "Poste",
-    "version": "0.0.1",
+    "version": "0.1.12",
     "description": "A chrome extension for users to save a post to their Poste account",
-    "manifest_version": 1,
-    "host_permissions": [
-        "<all_urls>"
-    ],
-    "action": {
-        "default_popup": "index.html",
+    "manifest_version": 2,
+    "permissions": ["activeTab", "storage", "tabs"],
+    "browser_action": {
+        "default_popup": "dist/index.html",
         "default_title": "Poste"
-    }   
+    },
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+      
 }

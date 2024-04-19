@@ -45,24 +45,7 @@ export const formLayoutStyles = {
 export const createPostSchema = z.object({
   title: z.string().min(2).max(50),
   description: z.string().min(2).max(50),
-  url: z.string().min(2).max(50),
-  folders: z.array(folderSchema),
-  tags: z
-    .string()
-    .min(2)
-    .max(100)
-    .refine(
-      (data) => {
-        // Split the string by comma and trim whitespace from each tag
-        const tagsArray = data.split(',').map((tag) => tag.trim());
-        // Check each tag is not empty and does not exceed the maximum length
-        return tagsArray.every((tag) => tag.length > 0 && tag.length <= 25);
-      },
-      {
-        message:
-          'Tags must be a comma-separated list, each tag should be non-empty and up to 25 characters long.',
-      }
-    ),
+  url: z.string().min(2),
 });
 
 // const fakeFolders = [
@@ -80,15 +63,29 @@ export const createPostSchema = z.object({
 //   },
 // ];
 
-export function CreatePostForm() {
+export function CreatePostForm({
+  setIsLoggedIn,
+}: {
+  setIsLoggedIn: (isLoggedIn: boolean) => void;
+}) {
   const navigate = useNavigate();
   const { token } = useContext(AppContext);
 
   const [folders, setFolders] = useState<Array<Folder>>([]);
+  const [selectedFolderId, setSelectedFolderId] = React.useState<
+    string | undefined
+  >(undefined);
   const [defaultUrl, setDefaultUrl] = useState<string>('');
   const [defaultTitle, setDefaultTitle] = useState<string>('');
   const [tags, setTags] = useState<string>('');
-
+  const form = useForm<z.infer<typeof createPostSchema>>({
+    resolver: zodResolver(createPostSchema),
+    defaultValues: {
+      title: defaultTitle,
+      description: '',
+      url: defaultUrl,
+    },
+  });
   useEffect(() => {
     fetch(`${process.env.API_URL}api/folders/`, {
       method: 'GET',
@@ -106,33 +103,24 @@ export function CreatePostForm() {
           };
         });
         setFolders(mappedFolders);
+        chrome.tabs.query(
+          { active: true, currentWindow: true },
+          function (tabs) {
+            if (tabs && tabs[0]) {
+              setDefaultUrl(tabs[0].url);
+              setDefaultTitle(tabs[0].title);
+              form.setValue('title', tabs[0].title);
+              form.setValue('url', tabs[0].url);
+            }
+          }
+        );
       })
       .catch((error) => {
         console.error('Error:', error);
       });
-
-    // @TODO consider abstracting the url and automatically populating it within the form
-    // chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    //   if (tabs && tabs[0]) {
-    //     setDefaultUrl(tabs[0].url);
-    //     setDefaultTitle(tabs[0].title);
-    //   }
-    // });
-  }, []);
-
-  const form = useForm<z.infer<typeof createPostSchema>>({
-    resolver: zodResolver(createPostSchema),
-    defaultValues: {
-      title: defaultTitle,
-      description: '',
-      url: defaultUrl,
-      tags: '',
-      folders: [],
-    },
-  });
+  }, [token]);
 
   function onSubmit(values: z.infer<typeof createPostSchema>) {
-    // @TODO verify this fetch
     fetch(`${process.env.API_URL}api/posts/`, {
       method: 'POST',
       headers: {
@@ -143,13 +131,11 @@ export function CreatePostForm() {
         title: values.title,
         description: values.description,
         url: values.url,
-        // @TODO something with folder_id:
+        folder_id: selectedFolderId,
         tags: tags,
       }),
     })
-      .then((response) => response.json())
       .then((data) => {
-        // @TODO what to do with data
         navigate('/success');
       })
       .catch((error) => {
@@ -168,12 +154,21 @@ export function CreatePostForm() {
     });
   }
 
+  function logOff() {
+    chrome.storage.local.set({ poste: '' }, () => {});
+    setIsLoggedIn(false);
+    navigate('/');
+  }
   return (
     <div
       style={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        width: '90%',
+        margin: 'auto',
       }}
     >
       <img
@@ -181,7 +176,7 @@ export function CreatePostForm() {
         alt="File"
         style={{
           marginBottom: '16px',
-          width: '85px',
+          width: '35px',
         }}
       />
       <div style={{ width: '100%' }}>
@@ -233,7 +228,11 @@ export function CreatePostForm() {
               }}
             >
               <h2 style={{ ...formTypographyStyles }}>Move To</h2>
-              <FolderList folders={folders} />
+              <FolderList
+                folders={folders}
+                selectedFolderId={selectedFolderId}
+                setSelectedFolderId={setSelectedFolderId}
+              />
             </div>
             <FormField
               control={form.control}
@@ -250,33 +249,55 @@ export function CreatePostForm() {
               )}
             />
             <div
-              display="flex"
-              flexDiretion="row"
-              justifyContent="flex-end"
-              width="100%"
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '100%',
+                flexWrap: 'no-wrap',
+              }}
             >
+              <div style={{ width: '200px' }}>
+                <Button
+                  type="submit"
+                  style={{
+                    width: '85px',
+                    height: '40px',
+                    background: '#84D6EF',
+                    color: '#000000',
+                    borderRadius: '15px',
+                    marginRight: '8px',
+                  }}
+                >
+                  Save
+                </Button>
+                <Button
+                  onClick={onReset}
+                  style={{
+                    width: '85px',
+                    height: '40px',
+                    background: '#357497',
+                    color: '#FFFFFF',
+                    borderRadius: '15px',
+                  }}
+                >
+                  Reset
+                </Button>
+              </div>
               <Button
-                type="submit"
+                type="button"
+                onClick={logOff}
+                variant="outline"
                 style={{
-                  width: '85px',
-                  background: '#84D6EF',
-                  color: '#000000',
-                  borderRadius: '15px',
-                  marginRight: '8px',
-                }}
-              >
-                Save
-              </Button>
-              <Button
-                onClick={onReset}
-                style={{
-                  width: '85px',
-                  background: '#357497',
+                  width: '85x',
+                  height: '40px',
+                  background:
+                    'linear-gradient(180deg, #357497 0%, rgba(53, 116, 151, 0.69) 100%)',
+                  border: 'none',
                   color: '#FFFFFF',
-                  borderRadius: '15px',
                 }}
               >
-                Reset
+                Log Off
               </Button>
             </div>
           </form>

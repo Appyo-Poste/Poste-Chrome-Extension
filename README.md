@@ -31,3 +31,8 @@ The `--watch` flag can be ommitted if not doing continuous development.
 ### To build bundle.js:
 `npm run build` to build for production
 `npm run dev` to build for development
+
+# To load within chrome
+1. `npx tailwindcss -i ./src/styles/globals.css -o ./src/output.css`
+2. `npm run dev`
+3. Then, open Google Chrome, go to the Extensions page (`chrome://extensions`), and enable "Developer mode". Click on "Load unpacked extension" and navigate to the directory which houses this repo. The extension should now be loaded into Google Chrome, and you should be able to click on its icon in the toolbar to see your popup. Any updates to the code mean that you should bump the version within `manifest.json`
